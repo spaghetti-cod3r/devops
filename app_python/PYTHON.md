@@ -1,7 +1,7 @@
-# Moscow Time Web Application
 This Python Flask application demonstrates the use of best practices for building a small, maintainable, and efficient web app.
 
 # Frameworks Used
+
 
 ## Flask:
 Flask is a lightweight web framework that is both flexible and secure, making it ideal for small applications like this. It integrates seamlessly with the Jinja2 templating engine to ensure secure rendering of dynamic HTML, protecting against Cross-Site Scripting (XSS) attacks by default. Flask’s modularity also allows easy scaling, while built-in features like session management and support for HTTPS enhance security.
