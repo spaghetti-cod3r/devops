@@ -68,7 +68,7 @@ This is a simple Python Flask web application that fetches the current time in M
    http://127.0.0.1:<Your-Selected-Port>
    ```
 
-3. To stop the app, press ```Ctrl + C```
+4. To stop the app, press ```Ctrl + C```
 
 ## 3. Using Docker (Distroless Image)
 
@@ -91,4 +91,4 @@ This is a simple Python Flask web application that fetches the current time in M
    http://127.0.0.1:<Your-Selected-Port>
    ```
 
-3. To stop the app, press ```Ctrl + C```
+4. To stop the app, press ```Ctrl + C```
