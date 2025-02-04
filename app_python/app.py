@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -15,6 +16,10 @@ def home():
         # parse the response to JSON
         data = response.json()
         moscow_time = data['dateTime']
+
+        # validate time format (YYYY-MM-DDTHH:MM:SS.sss)
+        if not re.match(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}", moscow_time):
+            raise ValueError("Invalid time format")
 
         # format the time
         formatted_time = moscow_time.replace('T', ' ').split('.')[0]
