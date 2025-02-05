@@ -60,12 +60,12 @@ The unit tests in this project are designed to ensure the reliability of core fu
 
 1. Pull the dockerized image from docker hub
    ```bash
-   docker pull spaghettic0der/moscow-time:v1.0.0
+   docker pull spaghettic0der/moscow-time:latest
    ```
 
 2. Run the image on any free port (e.g. 8000)
    ```bash
-   docker run -p<Your-Selected-Port>:8000 spaghettic0der/moscow-time:v1.0.0
+   docker run -p<Your-Selected-Port>:8000 spaghettic0der/moscow-time:latest
    ```
 
 3. Open your browser and navigate to:
