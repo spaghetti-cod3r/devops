@@ -28,11 +28,16 @@ def home():
         # format the time
         formatted_time = moscow_time.replace('T', ' ').split('.')[0]
 
+        return render_template('index.html', time=formatted_time)
     except Exception as e:
         # display if there is any error
-        formatted_time = f'error: {e}'
+        # formatted_time = f'error: {e}'
+        # Log the error for debugging
+        app.logger.error(f"an error occurred: {e}")
 
-    return render_template('index.html', time=formatted_time)
+        # Return a generic error message to the user
+        return "an error occurred. please try again later", 500
+    # return render_template('index.html', time=formatted_time)
 
 
 if __name__ == '__main__':
