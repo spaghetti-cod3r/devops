@@ -63,3 +63,24 @@ app_python/
 2. **HTML Integration:**
    - Followed semantic HTML practices in `index.html` for accessibility and clarity.
    - Used CSS for responsive and visually appealing UI design.
+
+---
+
+# Unit Testing
+
+In this project, unit tests are written to ensure functionality and robustness. Each test follows key best practices, such as:
+
+1. **Clear Naming:**
+Test names describe the method, scenario, and expected behavior.
+
+2. **AAA Pattern:**
+Tests follow the Arrange, Act, Assert structure for readability and clarity.
+
+3. **Mocking:**
+External dependencies like APIs are mocked using the ```mocker``` library.
+
+4. **Single Responsibility:**
+Each test focuses on one specific behavior or concern.
+
+5. **Helper Methods:**
+Repetitive setup code is centralized using fixtures.
