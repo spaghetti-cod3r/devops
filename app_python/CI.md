@@ -11,18 +11,7 @@ This document outlines the best practices implemented in our GitHub Actions CI w
 - The `fail-fast: true` setting ensures that if one job in a matrix fails, all remaining jobs stop immediately.
 - This saves execution time and provides quicker feedback to developers.
 
-<!-- ## 3. **Define a Python Version Matrix**
-- The workflow originally had a mistake where it referenced an undefined `matrix.python-version`.
-- Instead, a **fixed Python version (3.11) was set** to avoid errors.
-- If multiple versions need testing, a matrix strategy can be implemented:
-  ```yaml
-  strategy:
-    matrix:
-      python-version: [3.9, 3.10, 3.11] -->
-  <!-- ``` -->
-  <!-- This ensures compatibility across different Python environments. -->
-
-## 4. **Use Dependency Caching for Faster Builds**
+## 3. **Use Dependency Caching for Faster Builds**
 - **Pip dependencies are cached** to avoid redundant installations across workflow runs.
 - Implemented caching with:
   ```yaml
@@ -36,9 +25,8 @@ This document outlines the best practices implemented in our GitHub Actions CI w
   ```
 - This speeds up dependency installation significantly.
 
-## 5. **Ensure Code Checkout Before Any Steps**
+## 4. **Ensure Code Checkout Before Any Steps**
 - The `checkout` step is **required before accessing the repository**.
-- Initially, the `build-and-push-docker` job was missing the `Checkout Code` step.
 - Added:
   ```yaml
   - name: Checkout Code
@@ -46,16 +34,29 @@ This document outlines the best practices implemented in our GitHub Actions CI w
   ```
   Without this, subsequent steps would fail due to missing code files.
 
-<!-- ## 6. **Use Relative Paths Instead of Absolute Paths**
-- The original workflow used absolute paths like:
+## 5. **Integrate Security Checks with Snyk**
+- The workflow includes a **security scan** using [Snyk](https://snyk.io/) to detect vulnerabilities in dependencies.
+- Implemented Snyk with:
   ```yaml
-  cd /home/runner/work/devops/devops/app_python
+  - name: Run Snyk to check for vulnerabilities
+    uses: snyk/actions/python-3.10@master
+    with:
+      command: code test
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   ```
-- This was replaced with relative paths:
+- This ensures that security vulnerabilities are identified early in the development cycle.
+
+## 6. **Define Job Dependencies for Better Workflow Execution**
+- The `build-and-push-docker` job **depends on successful completion** of:
+  - `build-and-run-tests`
+  - `security`
+- Implemented with:
   ```yaml
-  cd app_python
+  needs: 
+    - build-and-run-tests
+    - security
   ```
-- This improves portability and avoids hardcoded directory issues. -->
+- This guarantees that the Docker image is built **only after** tests pass and security checks succeed.
 
 By following these best practices, the CI workflow is now **faster, more efficient, and easier to maintain**.
-
