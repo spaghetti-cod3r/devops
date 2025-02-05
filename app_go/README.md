@@ -40,12 +40,12 @@ This is a simple Go web application that fetches the current time in Moscow usin
 
 1. Pull the dockerized image from docker hub
    ```bash
-   docker pull spaghettic0der/moscow-time:v2.0.0
+   docker pull spaghettic0der/moscow-time-go:latest
    ```
 
 2. Run the image on any free port (e.g. 8000)
    ```bash
-   docker run -p<Your-Selected-Port>:8000 spaghettic0der/moscow-time:v2.0.0
+   docker run -p<Your-Selected-Port>:8000 spaghettic0der/moscow-time-go:latest
    ```
 
 3. Open your browser and navigate to:
