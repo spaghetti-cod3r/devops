@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    # branches:
-    #   - lab3
-    # paths:
-    #   - 'app_python/**'
+    branches:
+      - lab3
+    paths:
+      - 'app_python/**'
   pull_request:
     branches:
       - lab3
