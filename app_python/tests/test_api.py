@@ -16,6 +16,7 @@ def client():
     with app.test_client() as client:
         yield client
 
+
 def test_home_api_failure(client, mocker):
     """test handling of an API failure"""
     mocker.patch(
@@ -24,7 +25,8 @@ def test_home_api_failure(client, mocker):
     )
     response = client.get('/')
     assert response.status_code == 500  # Expect 500 now
-    assert "an error occurred, please try again later" in response.get_data(as_text=True)
+    assert ('an error occurred, please try again later'
+            in response.get_data(as_text=True))
 
 
 def test_home_invalid_json(client, mocker):
@@ -34,4 +36,5 @@ def test_home_invalid_json(client, mocker):
     mock_get.return_value.raise_for_status.return_value = None
     response = client.get('/')
     assert response.status_code == 500
-    assert "an error occurred, please try again later" in response.get_data(as_text=True)
+    assert ('an error occurred, please try again later'
+            in response.get_data(as_text=True))

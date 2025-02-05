@@ -30,6 +30,7 @@ def test_time_format(client, mocker):
     time_text = response.get_data(as_text=True)
     assert re.search(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", time_text)
 
+
 def test_time_format_invalid(client, mocker):
     """test handling when API returns a malformed time format"""
     mock_response = {
@@ -40,5 +41,5 @@ def test_time_format_invalid(client, mocker):
     mock_get.return_value.raise_for_status.return_value = None
     response = client.get('/')
     assert response.status_code == 500
-    assert "an error occurred, please try again later" in response.get_data(as_text=True)
-
+    assert ('an error occurred, please try again later'
+            in response.get_data(as_text=True))
