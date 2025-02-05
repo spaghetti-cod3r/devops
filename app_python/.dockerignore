@@ -1,6 +1,7 @@
 venv/
 assets/
 Dockerfile
+tests/
 
 **/*.pyc
 **/*.pyo
