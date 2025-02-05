@@ -30,14 +30,11 @@ def home():
 
         return render_template('index.html', time=formatted_time)
     except Exception as e:
-        # display if there is any error
-        # formatted_time = f'error: {e}'
-        # Log the error for debugging
+        # log if there is any error for debugging
         app.logger.error(f"an error occurred: {e}")
 
-        # Return a generic error message to the user
-        return "an error occurred. please try again later", 500
-    # return render_template('index.html', time=formatted_time)
+        # return a generic error message to the user
+        return 'an error occurred, please try again later', 500
 
 
 if __name__ == '__main__':
