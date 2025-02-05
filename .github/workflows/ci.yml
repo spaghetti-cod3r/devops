@@ -57,6 +57,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Change to The Working Directory
+        run: cd /home/runner/work/devops/devops/app_python
+
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.10@master
