@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches:
-      - lab3
-    paths:
-      - 'app_python/**'
+    # branches:
+    #   - lab3
+    # paths:
+    #   - 'app_python/**'
   pull_request:
     branches:
       - lab3
@@ -53,6 +53,16 @@ jobs:
         uses: snyk/actions/python@master
         with:
           command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   
