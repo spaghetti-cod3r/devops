@@ -28,9 +28,6 @@ jobs:
       - name: Run Linter
         run: flake8 --exclude=.git,__pycache__,migrations,venv,build,dist,docs --ignore=E402,F841 .
 
-      - name: Change Directory to app_python
-        run: cd /home/runner/work/devops/devops/app_python
-
       - name: Run Tests
         run: pytest
 
@@ -41,7 +38,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest .
+        run: |
+          cd /home/runner/work/devops/devops/app_python
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest .
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest
+        run: |
+          cd /home/runner/work/devops/devops/app_python
+          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest
