@@ -127,8 +127,8 @@ The CI workflow performs the following steps:
 ## Triggering the Workflow
 
 This workflow is triggered on the following events:
-- **Push**: When code is pushed to any branch.
-- **Pull Request**: When a pull request is opened or updated.
+- **Push**: When code is pushed to `lab3` branch, and changes are made withing app_python directory.
+- **Pull Request**: When a pull request is opened or updated on the `lab3` branch, and changes are made withing app_python directory.
 
 ## Secrets Required
 
