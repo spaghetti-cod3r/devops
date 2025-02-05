@@ -48,6 +48,13 @@ jobs:
 
       - name: Run Tests
         run: pytest
+
+      - name: Snyk Security Scan
+        uses: snyk/actions/python@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   
   build-and-push-docker:
     needs: build-and-run-tests
