@@ -9,6 +9,9 @@ This is a simple Python Flask web application that fetches the current time in M
 - Displays the time in a clean and responsive web interface.
 - Handles errors gracefully and provides fallback behavior in case of issues.
 
+# Unit Testing
+The unit tests in this project are designed to ensure the reliability of core functionalities, including home page loading, API error handling, and time format validation. We applied best practices such as clear naming conventions, mocking external dependencies, and focusing each test on a single behavior. The tests follow the AAA Pattern to keep them organized and maintainable.
+
 # Installation
 
 ## 1. On Linux Environment
