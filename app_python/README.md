@@ -1,6 +1,8 @@
 # App Title
 **Moscow Time Web Application**
 
+[![CI](https://github.com/spaghetti-cod3r/devops/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/spaghetti-cod3r/devops/actions/workflows/ci.yml)
+
 # Description
 This is a simple Python Flask web application that fetches the current time in Moscow using TimeAPI and displays it in a visually appealing HTML interface.
 
