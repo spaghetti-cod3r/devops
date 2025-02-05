@@ -95,3 +95,49 @@ The unit tests in this project are designed to ensure the reliability of core fu
    ```
 
 4. To stop the app, press ```Ctrl + C```
+
+
+# CI Workflow
+
+This repository uses GitHub Actions to automate continuous integration (CI) for testing and building Docker images. The CI workflow is defined in the `.github/workflows/ci.yml` file and is triggered on `push` and `pull_request` events.
+
+
+## Workflow Overview
+
+The CI workflow performs the following steps:
+
+1. **Checkout Code**: The latest code is checked out from the repository using the `actions/checkout` action.
+
+2. **Set up Python**: The workflow sets up Python 3.11 using the `actions/setup-python` action.
+
+3. **Install Dependencies**: Installs project dependencies including `Flask`, `requests`, `pytest`, `pytest-mock`, and `flake8` using `pip`.
+
+4. **Run Linter**: The code is linted using `flake8` to ensure that it adheres to style guidelines and to catch potential issues before running tests.
+
+5. **Run Tests**: The tests are run using `pytest` to ensure that the code is functioning correctly.
+
+6. **Log in to Docker Hub**: The workflow logs into Docker Hub using credentials stored in GitHub Secrets (`DOCKER_USERNAME` and `DOCKER_PASSWORD`).
+
+7. **Build Docker Image**: A Docker image is built from the `app_python` directory. The image is tagged with the `latest` tag and pushed to the repository on Docker Hub.
+
+8. **Push Docker Image**: The Docker image is pushed to Docker Hub so it can be used in production or development environments.
+
+## Triggering the Workflow
+
+This workflow is triggered on the following events:
+- **Push**: When code is pushed to any branch.
+- **Pull Request**: When a pull request is opened or updated.
+
+## Secrets Required
+
+To successfully run this workflow, the following secrets must be added to the GitHub repository:
+- `DOCKER_USERNAME`: Your Docker Hub username.
+- `DOCKER_PASSWORD`: Your Docker Hub password or an access token.
+
+## Example of Workflow Trigger
+
+The workflow can be triggered by pushing code or opening a pull request, like this:
+
+```bash
+git push origin main
+```
