@@ -60,6 +60,11 @@ jobs:
       # - name: Change to The Working Directory
       #   run: cd /home/runner/work/devops/devops/app_python
 
+      - name: Install Dependencies
+        run: |
+          cd /home/runner/work/devops/devops/app_python
+          python -m pip install -r requirements.txt
+
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.10@master
