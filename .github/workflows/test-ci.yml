@@ -23,7 +23,7 @@ jobs:
           python-version: 3.11
 
       - name: Install Dependencies
-        run: python -m pip install flask requests pytest
+        run: python -m pip install flask requests pytest pytest-mocker
 
       - name: Run Tests
         run: pytest
