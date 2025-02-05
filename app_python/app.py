@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     try:
-        # getting the current time in moscow using the WorldTimeAPI  
+        # getting the current time in moscow using the WorldTimeAPI
         moscowTimeZoneParam = 'Europe/Moscow'
         time_api_url = (
             f'https://timeapi.io/api/Time/current/zone?'
