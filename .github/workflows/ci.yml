@@ -16,8 +16,7 @@ jobs:
   build-and-run-tests:
     strategy:
       fail-fast: true
-
-    name: CI
+      
     runs-on: ubuntu-latest
 
     steps:
@@ -48,6 +47,9 @@ jobs:
 
 
   security:
+    needs: 
+      - build-and-run-tests
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
