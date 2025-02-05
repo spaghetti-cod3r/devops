@@ -2,10 +2,10 @@ name: CI-GO
 
 on:
   push:
-    # branches:
-    #   - lab3
-    # paths:
-    #   - 'app_go/**'
+    branches:
+      - lab3
+    paths:
+      - 'app_go/**'
   pull_request:
     branches:
       - lab3
