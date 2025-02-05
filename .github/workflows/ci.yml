@@ -86,7 +86,6 @@ jobs:
           pip install -r app_python/requirements.txt
 
       - name: Run Snyk to check for vulnerabilities
-        run: cd app_python
         uses: snyk/actions/python-3.10@master
         with:
           command: test
