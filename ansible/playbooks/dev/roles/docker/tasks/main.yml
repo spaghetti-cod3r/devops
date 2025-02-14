@@ -1,0 +1,12 @@
+---
+- name: Include Docker installation tasks
+  import_tasks: install_docker.yml
+
+- name: Include Docker Compose installation tasks
+  import_tasks: install_compose.yml
+
+- name: Include Docker configuration tasks
+  import_tasks: configure_docker.yml
+
+- name: Include Secure Docker
+  import_tasks: secure_docker.yml

@@ -1,0 +1,7 @@
+---
+- name: Install Docker using Ansible Role
+  hosts: all
+  become: yes
+  roles:
+    - docker
+

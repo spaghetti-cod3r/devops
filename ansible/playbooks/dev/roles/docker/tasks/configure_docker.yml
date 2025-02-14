@@ -1,0 +1,7 @@
+---
+- name: Add user to Docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+  notify: Restart Docker

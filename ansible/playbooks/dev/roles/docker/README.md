@@ -1,0 +1,24 @@
+# Docker Role
+
+This role installs and configures Docker and Docker Compose.
+
+## Requirements
+
+- Ansible 2.9+
+- Ubuntu 22.04
+
+## Role Variables
+
+- `docker_version`: The version of Docker to install (default: `latest`).
+- `docker_compose_version`: The version of Docker Compose to install (default: `1.29.2`).
+
+## Example Playbook
+
+```yaml
+---
+- name: Ansible and Docker Deployment
+  hosts: all
+  become: true
+  roles:
+    - docker
+```
