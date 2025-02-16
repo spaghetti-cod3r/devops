@@ -2,83 +2,168 @@
 
 ## Playbook Execution
 
-to run the playbook, use:
+after setting up the defaults/main.yml file, let's run the playbooks and observe the output and check the instance after each run
+
+### Deploy app_python
+
+to run the playbook, we use:
 
 ```bash
-ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
+ansible-playbook playbooks/dev/app_python//main.yml
 ```
 
 after executing the previous line, we get:
 
 ```bash
-PLAY [Install Docker using Ansible Role] **************************************************************************************************
+PLAY [all] *****************************************************************************************************************
 
-TASK [Gathering Facts] ********************************************************************************************************************
+TASK [Gathering Facts] *****************************************************************************************************
 ok: [aws_instance]
 
-TASK [docker : Install required packages] *************************************************************************************************
-ok: [aws_instance]
-
-TASK [docker : Add Docker GPG key] ********************************************************************************************************
-ok: [aws_instance]
-
-TASK [docker : Add Docker repository] *****************************************************************************************************
-ok: [aws_instance]
-
-TASK [docker : Install Docker] ************************************************************************************************************
+TASK [web_app : Pull Docker image] *****************************************************************************************
 changed: [aws_instance]
 
-TASK [docker : Enable Docker service to start on boot] ************************************************************************************
-ok: [aws_instance]
-
-TASK [docker : Install Docker Compose] ****************************************************************************************************
+TASK [web_app : Create Application Directory] ******************************************************************************
 changed: [aws_instance]
 
-TASK [docker : Add user to Docker group] **************************************************************************************************
-ok: [aws_instance]
+TASK [web_app : Deploy Docker Compose File] ********************************************************************************
+changed: [aws_instance]
 
-PLAY RECAP ********************************************************************************************************************************
-aws_instance               : ok=8    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+TASK [web_app : Start Docker Compose] **************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Stop the running container] ********************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app : Remove the container] **************************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app : Get image details] *****************************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app : Remove the Docker image] ***********************************************************************************
+skipping: [aws_instance]
+
+PLAY RECAP *****************************************************************************************************************
+aws_instance               : ok=5    changed=4    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0 
 ```
 
+- let's check:
+- ![img](assets/img12.png)
 
-checking inventory details:
+### Wipe app_python
 
-```
-ansible-inventory -i inventory/default_aws_ec2.yml --list
-
-ansible-inventory -i inventory/default_aws_ec2.yml --graph
-```
-
-we get the following output:
+to run the playbook, we set the `wipe_image:true` in the defaults file and then we use:
 
 ```bash
-{
-    "_meta": {
-        "hostvars": {
-            "aws_instance": {
-                "ansible_host": "ec2-18-234-98-193.compute-1.amazonaws.com",
-                "ansible_python_interpreter": "/usr/bin/python3",
-                "ansible_ssh_private_key_file": "/home/ammar/Desktop/devops/ansible/.ssh/VM_Linux.pem",
-                "ansible_user": "ubuntu"
-            }
-        }
-    },
-    "all": {
-        "children": [
-            "ungrouped"
-        ]
-    },
-    "ungrouped": {
-        "hosts": [
-            "aws_instance"
-        ]
-    }
-}
-
-------------------------------------------------------------------------------------
-
-@all:
-  |--@ungrouped:
-  |  |--aws_instance
+ansible-playbook playbooks/dev/app_python//main.yml --tags wipe
 ```
+
+after executing the previous line, we get:
+
+```bash
+PLAY [all] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Stop the running container] ********************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Remove the container] **************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Get image details] *****************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Remove the Docker image] ***********************************************************************************
+changed: [aws_instance]
+
+PLAY RECAP *****************************************************************************************************************
+aws_instance               : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
+
+- let's check:
+- ![img](assets/img13.png)
+
+### Deploy app_go
+
+to run the playbook, we use:
+
+```bash
+ansible-playbook playbooks/dev/app_go//main.yml
+```
+
+after executing the previous line, we get:
+
+```bash
+PLAY [all] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app_go : Pull Docker image] **************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app_go : Create Application Directory] ***************************************************************************
+ok: [aws_instance]
+
+TASK [web_app_go : Deploy Docker Compose File] *****************************************************************************
+ok: [aws_instance]
+
+TASK [web_app_go : Start Docker Compose] ***********************************************************************************
+changed: [aws_instance]
+
+TASK [web_app_go : Stop the running container] *****************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app_go : Remove the container] ***********************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app_go : Get image details] **************************************************************************************
+skipping: [aws_instance]
+
+TASK [web_app_go : Remove the Docker image] ********************************************************************************
+skipping: [aws_instance]
+
+PLAY RECAP *****************************************************************************************************************
+aws_instance               : ok=5    changed=2    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0 
+```
+
+- let's check:
+- ![img](assets/img14.png)
+
+### Wipe app_python
+
+to run the playbook, we set the `wipe_image:true` in the defaults file and then we use:
+
+```bash
+ansible-playbook playbooks/dev/app_go//main.yml --tags wipe
+```
+
+after executing the previous line, we get:
+
+```bash
+PLAY [all] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app_go : Stop the running container] *****************************************************************************
+changed: [aws_instance]
+
+TASK [web_app_go : Remove the container] ***********************************************************************************
+changed: [aws_instance]
+
+TASK [web_app_go : Get image details] **************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app_go : Remove the Docker image] ********************************************************************************
+changed: [aws_instance]
+
+PLAY RECAP *****************************************************************************************************************
+aws_instance               : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
+
+- let's check:
+- ![img](assets/img15.png)

@@ -1,0 +1,6 @@
+---
+docker_image_name: "spaghettic0der/moscow-time-go"
+docker_image_tag: "latest"
+container_name: "moscow-time-go"
+app_port: 8000
+wipe_image: false

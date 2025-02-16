@@ -1,0 +1,22 @@
+- name: Wipe Existing Docker Container
+  block:
+    - name: Stop the running container
+      docker_container:
+        name: "{{container_name}}"
+        state: stopped
+
+    - name: Remove the container
+      docker_container:
+        name: "{{container_name}}"
+        state: absent
+
+- name: Get image details
+  docker_image_info:
+    name: "{{docker_image_name}}"
+  register: image_info
+
+- name: Remove the Docker image
+  docker_image:
+    name: "{{ image_info.images[0].Id }}"
+    state: absent
+  when: image_info.images | length > 0

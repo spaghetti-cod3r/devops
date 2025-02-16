@@ -1,0 +1,63 @@
+---
+# Task1
+
+# - name: Ensure Docker is installed
+#   apt:
+#     name: docker.io
+#     state: present
+#     update_cache: yes
+
+# - name: Pull the Docker image
+#   docker_image:
+#     name: "{{ docker_image_name }}"
+#     tag: "{{ docker_image_tag }}"
+#     source: pull
+
+# - name: Run the Docker container
+#   docker_container:
+#     name: "{{ container_name }}"
+#     image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+#     state: started
+#     ports:
+#       - "{{ app_port }}:8000"
+#     restart_policy: always
+
+
+# Task2:
+
+- name: Deploy Application
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        source: pull
+      tags:
+        - docker
+
+    - name: Create Application Directory
+      file:
+        path: /opt/web_app
+        state: directory
+        mode: '0755'
+      tags:
+        - docker
+
+    - name: Deploy Docker Compose File
+      template:
+        src: docker-compose.yml.j2
+        dest: /opt/web_app/docker-compose.yml
+      tags:
+        - docker
+
+    - name: Start Docker Compose
+      command: docker-compose -f /opt/web_app/docker-compose.yml up -d
+      tags:
+        - docker
+  tags:
+    - deploy
+
+- name: Wipe Existing Docker Container
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+  when: wipe_image
