@@ -9,11 +9,41 @@ services:
     image: "spaghettic0der/distro-moscow-time:v1.0.1"
     ports:
       - "9100:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "256m"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import http.client; conn = http.client.HTTPConnection('localhost', 9100); conn.request('GET', '/'); response = conn.getresponse(); exit(0) if response.status == 200 else exit(1)"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - loki
   
   app_go:
     image: "spaghettic0der/distro-time-moscow:v2.0.0"
     ports:
       - "9200:8000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "256m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:9200/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - loki
 
 
   loki:
@@ -21,6 +51,18 @@ services:
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "1g"
+    healthcheck:
+      test: wget --spider -q http://localhost:3100/ready
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
       - loki
 
@@ -30,6 +72,18 @@ services:
       - /var/log:/var/log
       - ./promtail.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"
+    healthcheck:
+      test: pgrep -f promtail
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
       - loki
 
@@ -61,5 +115,34 @@ services:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "1g"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3000/"] 
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - loki
+    
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    mem_limit: "1g"
+    healthcheck:
+      test: wget http://localhost:9090
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
       - loki
