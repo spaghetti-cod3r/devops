@@ -1,0 +1,8 @@
+replicas: 2
+
+image:
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8000
