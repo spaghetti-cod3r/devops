@@ -121,3 +121,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
+env:
+  APP_ENV: "production"
+  DEBUG: "false"
