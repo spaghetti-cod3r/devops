@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    image: docker pull spaghettic0der/moscow-time:latest
+
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
