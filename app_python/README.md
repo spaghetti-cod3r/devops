@@ -105,8 +105,6 @@ The unit tests in this project are designed to ensure the reliability of core fu
    ```
 4. To stop the app, press ``Ctrl + C``
 
-
-
 ## 4. Using Docker Compose
 
 ### Requirements
@@ -121,12 +119,12 @@ The unit tests in this project are designed to ensure the reliability of core fu
 
    services:
      app:
-       image: docker pull spaghettic0der/moscow-time:latest
+       image: docker pull spaghettic0der/moscow-time:v2.0.0
 
        ports:
          - "8000:8000"
        volumes:
-         - ./data:/app/data
+         - ./data:/data
    ```
 2. Specify the port in the docker-compose file (e.g. 8000):
 
@@ -139,22 +137,19 @@ The unit tests in this project are designed to ensure the reliability of core fu
    ```bash
    docker-compose up -d
    ```
-4. Run the image on any free port (e.g. 8000)
-
-   ```bash
-   docker run -p<Your-Selected-Port>:8000 spaghettic0der/distro-moscow-time:v1.0.1
-   ```
-5. Open your browser and navigate to:
+4. Open your browser and navigate to:
 
    ```bash
    http://127.0.0.1:<Your-Selected-Port>
    ```
-6. To display the visit counts, navigate to:
+5. To display the visit counts, navigate to:
 
    ```bash
    http://127.0.0.1:<Your-Selected-Port>/visits
    ```
-7. To stop the app, press ``Ctrl + C``
+6. To stop the app, press ``Ctrl + C``
+
+**Note**: the visit count will be saved locally inside `data/visits.txt`
 
 # CI Workflow
 

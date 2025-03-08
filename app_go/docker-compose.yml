@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: spaghettic0der/moscow-time:v2.0.0
-
+    image: spaghettic0der/moscow-time-go:v2.0.0
     ports:
       - "8000:8000"
     volumes:

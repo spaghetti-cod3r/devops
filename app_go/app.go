@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"os"
+	"strconv"
 )
 
 // API response structure
@@ -13,8 +15,39 @@ type TimeAPIResponse struct {
 	DateTime string `json:"dateTime"`
 }
 
+// path to the visits file
+var visitsFile = "/data/visits.txt"
+
+// function to increment the visit counter
+func incrementVisits() int {
+	// read the current visit count
+	visits := 0
+	if _, err := os.Stat(visitsFile); err == nil {
+		data, err := os.ReadFile(visitsFile)
+		if err == nil {
+			visits, _ = strconv.Atoi(string(data))
+		}
+	}
+
+	// increase
+	visits++
+
+	// save and update
+	err := os.WriteFile(visitsFile, []byte(strconv.Itoa(visits)), 0644)
+	if err != nil {
+		log.Println("error occured while saving visits:", err)
+	}
+
+	return visits
+}
+
+
 // handler for the homepage
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+
+	// increase the
+	incrementVisits()
+
 	// API URL
 	timeAPIURL := "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Moscow"
 
@@ -49,8 +82,31 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, map[string]string{"Time": formattedTime})
 }
 
+// handler for the visits counter
+func visitsHandler(w http.ResponseWriter, r *http.Request) {
+	// read the visit count from the file
+	visits := 0
+	if _, err := os.Stat(visitsFile); err == nil {
+		data, err := os.ReadFile(visitsFile)
+		if err == nil {
+			visits, _ = strconv.Atoi(string(data))
+		}
+	}
+
+	// return the visit count as a response
+	w.Write([]byte("Total visits: " + strconv.Itoa(visits)))
+}
+
 func main() {
+
+	// initialize the visits file if it doesn't exist
+	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
+		os.WriteFile(visitsFile, []byte("0"), 0644)
+	}
+
 	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/visits", visitsHandler)
+
 	log.Println("Server started on :8000")
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

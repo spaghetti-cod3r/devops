@@ -1,4 +1,3 @@
-
 # use the official latest ubuntu base image
 FROM python:3-alpine3.15
 
@@ -12,6 +11,12 @@ RUN --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
 # copy the projects content to the container working directory
 COPY app.py /app/
 COPY templates/index.html /app/templates/
+
+# Create a directory for the visits file
+RUN mkdir -p /data
+
+# Ensure the visits file exists
+RUN touch /data/visits.txt
 
 # expose the app's port (8000 as the setup in the main app code)
 EXPOSE 8000

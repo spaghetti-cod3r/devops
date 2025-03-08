@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "app-python.selectorLabels" . | nindent 8 }}
+        {{- include "app-python.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -34,8 +34,6 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
@@ -46,7 +44,7 @@ spec:
             {{- include "app-python.envVars" . | nindent 12 }}
           ports:
             - name: http
-              containerPort: 8000
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:

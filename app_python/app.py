@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-VISITS = "visits.txt"
+VISITS = "/data/visits.txt"
 
 if not os.path.exists(VISITS):
     with open(VISITS, "w") as f:
